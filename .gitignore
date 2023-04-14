@@ -1,0 +1,12 @@
+.idea
+build
+coverage
+docs
+phpstan.neon
+testbench.yaml
+vendor
+node_modules
+
+*.cache
+phpunit.xml
+.huskyrc
