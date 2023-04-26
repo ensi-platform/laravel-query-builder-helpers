@@ -4,7 +4,7 @@ use Ensi\QueryBuilderHelpers\Filters\ExtraFilter;
 use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
 use function Pest\Laravel\postJson;
 
-test('filter exclude date success', function (string $value, int $count) {
+test('filter exclude date success', function (string|array $value, int $count) {
     ParentModel::factory()->createMany([
         ['datetime_value' => '2022-03-20 00:00:00'],
         ['datetime_value' => '2022-03-17 00:00:00'],
@@ -23,4 +23,5 @@ test('filter exclude date success', function (string $value, int $count) {
     'date' => ['2022-03-20 00:00:00', 3],
     'start of day' => ['2022-03-17 00:00:00', 2],
     'datetime' => ['2022-03-18 12:45:15', 4],
+    'multiple dates' => [['2022-03-17 12:45:15', '2022-03-20 12:45:15'], 1],
 ]);

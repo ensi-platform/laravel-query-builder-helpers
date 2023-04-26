@@ -1,17 +1,17 @@
 <?php
 
-namespace Ensi\QueryBuilderHelpers\ApplicableFilters;
+namespace Ensi\QueryBuilderHelpers\QueryFilters;
 
-use Carbon\CarbonInterface;
+use Carbon\CarbonImmutable;
 use Ensi\QueryBuilderHelpers\Enums\RangeOperator;
 use Illuminate\Support\Facades\Date;
 use Spatie\QueryBuilder\Exceptions\InvalidFilterValue;
 
 class FiltersDateRange extends FiltersRange
 {
-    protected function castValue(mixed $source): CarbonInterface
+    protected function castValue(mixed $source): CarbonImmutable
     {
-        $value = Date::make($source) ?? throw InvalidFilterValue::make($source);
+        $value = Date::make($source)->toImmutable() ?? throw InvalidFilterValue::make($source);
 
         // > (дата исключается) - сравнение с концом дня
         // >= (дата включается) - сравнение с началом дня

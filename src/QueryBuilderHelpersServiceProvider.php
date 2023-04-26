@@ -2,20 +2,21 @@
 
 namespace Ensi\QueryBuilderHelpers;
 
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class QueryBuilderHelpersServiceProvider extends PackageServiceProvider
+class QueryBuilderHelpersServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
+    public function boot(): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-        $package
-            ->name('query-builder-extensions')
-            ->hasConfigFile();
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../config/query-builder-helpers.php' => config_path('query-builder-helpers.php'),
+            ], 'config');
+        }
+    }
+
+    public function register(): void
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/query-builder-helpers.php', 'query-builder-helpers');
     }
 }

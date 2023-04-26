@@ -1,6 +1,6 @@
 <?php
 
-namespace Ensi\QueryBuilderHelpers\ApplicableFilters;
+namespace Ensi\QueryBuilderHelpers\QueryFilters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Exceptions\InvalidFilterValue;

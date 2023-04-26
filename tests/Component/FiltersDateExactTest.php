@@ -22,7 +22,7 @@ test('filter datetime single value success', function ($value) {
 })->with([
     'date' => ['2022-03-19'],
     'start of day' => ['2022-03-19 00:00:00'],
-    'datetime' => ['2022-03-18 12:45:15'],
+    'datetime' => ['2022-03-19 15:45:15'],
 ]);
 
 test('filter datetime multi value one result success', function () {

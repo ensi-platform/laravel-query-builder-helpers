@@ -1,6 +1,6 @@
 <?php
 
-use Ensi\QueryBuilderHelpers\ApplicableFilters\NameGenerator;
+use Ensi\QueryBuilderHelpers\Utils\NameGenerator;
 
 test('generate missing type', function () {
     $generator = new NameGenerator([]);
@@ -15,14 +15,14 @@ test('generate with registered suffix', function () {
 });
 
 test('register from config', function () {
-    config()->set('query-builder-extensions.suffixes', ['foo' => '__bar']);
+    config()->set('query-builder-helpers.suffixes', ['foo' => '_bar']);
     $generator = new NameGenerator();
 
-    expect($generator->generate('baz', 'foo'))->toBe('baz__bar');
+    expect($generator->generate('baz', 'foo'))->toBe('baz_bar');
 });
 
 test('load default config', function () {
     $generator = new NameGenerator();
 
-    expect($generator->generate('foo', 'less'))->toBe('foo__lt');
+    expect($generator->generate('foo', 'less'))->toBe('foo_lt');
 });

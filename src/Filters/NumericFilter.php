@@ -4,7 +4,7 @@ namespace Ensi\QueryBuilderHelpers\Filters;
 
 use Spatie\QueryBuilder\AllowedFilter;
 
-class RangeFilter extends Filter
+class NumericFilter extends Filter
 {
     public function exact(): static
     {

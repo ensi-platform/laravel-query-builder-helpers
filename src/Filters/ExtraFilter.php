@@ -3,16 +3,16 @@
 namespace Ensi\QueryBuilderHelpers\Filters;
 
 use Closure;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\FiltersDateExact;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\FiltersDateNot;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\FiltersDateRange;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\FiltersEmpty;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\FiltersHas;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\FiltersLike;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\FiltersPredefined;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\FiltersRange;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\NestedFilter;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\NestedScope;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateExact;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateNot;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateRange;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersEmpty;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersHas;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersLike;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersPredefined;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersRange;
+use Ensi\QueryBuilderHelpers\QueryFilters\NestedFilter;
+use Ensi\QueryBuilderHelpers\QueryFilters\NestedScope;
 use Ensi\QueryBuilderHelpers\Enums\LikeMode;
 use Ensi\QueryBuilderHelpers\Enums\RangeOperator;
 use Spatie\QueryBuilder\AllowedFilter;

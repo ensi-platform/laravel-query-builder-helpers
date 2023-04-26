@@ -1,8 +1,8 @@
 <?php
 
-namespace Ensi\QueryBuilderHelpers\ApplicableFilters;
+namespace Ensi\QueryBuilderHelpers\QueryFilters;
 
-use Carbon\CarbonInterface;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Date;
 
@@ -22,13 +22,13 @@ class FiltersDateExact extends FiltersBase
         });
     }
 
-    protected function castValue(mixed $source): CarbonInterface
+    protected function castValue(mixed $source): CarbonImmutable
     {
         return Date::make($source)->toImmutable();
     }
 
-    private function range(CarbonInterface $value): array
+    private function range(CarbonImmutable $value): array
     {
-        return [$value, $value->addDay()->subMicrosecond()];
+        return [$value->startOfDay(), $value->endOfDay()];
     }
 }

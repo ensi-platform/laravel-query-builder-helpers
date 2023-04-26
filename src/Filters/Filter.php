@@ -3,7 +3,7 @@
 namespace Ensi\QueryBuilderHelpers\Filters;
 
 use ArrayIterator;
-use Ensi\QueryBuilderHelpers\ApplicableFilters\NameGenerator;
+use Ensi\QueryBuilderHelpers\Utils\NameGenerator;
 use IteratorAggregate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Traversable;

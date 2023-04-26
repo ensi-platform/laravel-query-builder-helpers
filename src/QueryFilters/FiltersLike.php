@@ -1,6 +1,6 @@
 <?php
 
-namespace Ensi\QueryBuilderHelpers\ApplicableFilters;
+namespace Ensi\QueryBuilderHelpers\QueryFilters;
 
 use Ensi\QueryBuilderHelpers\Enums\LikeMode;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,7 +32,9 @@ class FiltersLike extends FiltersBase
     {
         $wrappedProperty = $query->getQuery()->getGrammar()->wrap($column);
 
-        return "LOWER({$wrappedProperty}) LIKE ?";
+        $likeOperator = config('query-builder-helpers.like_operator');
+
+        return "{$wrappedProperty} {$likeOperator} ?";
     }
 
     protected function makeTemplate(string $source): string

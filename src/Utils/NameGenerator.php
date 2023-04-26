@@ -1,6 +1,6 @@
 <?php
 
-namespace Ensi\QueryBuilderHelpers\ApplicableFilters;
+namespace Ensi\QueryBuilderHelpers\Utils;
 
 class NameGenerator
 {
@@ -9,7 +9,7 @@ class NameGenerator
 
     public function __construct(?array $suffixes = null)
     {
-        $this->suffixes = $suffixes ?? config('query-builder-extensions.suffixes') ?? [];
+        $this->suffixes = $suffixes ?? config('query-builder-helpers.suffixes');
     }
 
     public function generate(string $name, string $type): string

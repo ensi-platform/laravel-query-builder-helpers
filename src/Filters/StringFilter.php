@@ -4,7 +4,7 @@ namespace Ensi\QueryBuilderHelpers\Filters;
 
 use Spatie\QueryBuilder\AllowedFilter;
 
-class InputFilter extends Filter
+class StringFilter extends Filter
 {
     public function exact(): static
     {
