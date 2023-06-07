@@ -108,8 +108,8 @@ class ExtraFilter
      * }, [
      *      ExtraFilter::greater('children_value'),
      * ]);
-     * @param  array|Filter[] $filters
-     * @return array|AllowedFilter[]
+     * @param  array|AllowedFilter[] $filters
+     * @return array|NestedFilter[]
      */
     public static function nested(string|Closure $relation, array $filters): array
     {
