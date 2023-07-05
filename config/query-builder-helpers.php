@@ -25,4 +25,11 @@ return [
      * may want to change it to ILIKE to allow case-insensitive searches.
      */
     'like_operator' => 'LIKE',
+
+    /*
+     * This option defines timestamp format.
+     * If "true", then 2022-03-19 15:45:15 == 1647704715000
+     * If "false", then 2022-03-19 15:45:15 == 1647704715
+     */
+    'timestamp_ms' => true,
 ];

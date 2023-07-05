@@ -53,7 +53,9 @@ test('range relation', function (array $filter) {
     'multiple filters' => [['float__lte' => 125.5, 'int__gt' => 12]],
 ]);
 
-test('date range', function (array $filter) {
+test('date range', function (array $filter, bool $timestampMs = true) {
+    config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
+
     ParentModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:44:11')]);
     ParentModel::factory()->createOne(['datetime_value' => Date::make('2022-08-03 00:28:36')]);
     $expected = ParentModel::factory()->createOne(['datetime_value' => Date::make('2022-08-02 11:55:08')]);
@@ -73,9 +75,17 @@ test('date range', function (array $filter) {
     'exclude boundaries' => [['date__gt' => '2022-08-01T00:00:00.000000Z', 'date__lt' => '2022-08-03T00:00:00.000000Z']],
     'include start' => [['date__gte' => '2022-08-02T18:00:00.000000Z', 'date__lt' => '2022-08-03T00:00:00.000000Z']],
     'include end' => [['date__gt' => '2022-08-01T00:00:00.000000Z', 'date__lte' => '2022-08-02T07:00:00.000000Z']],
+    'timestamp exclude boundaries' => [['date__gt' => 1659312000, 'date__lt' => 1659484800], false],
+    'timestamp include start' => [['date__gte' => 1659463200, 'date__lt' => 1659484800], false],
+    'timestamp include end' => [['date__gt' => 1659312000, 'date__lte' => 1659423600], false],
+    'timestampMs exclude boundaries' => [['date__gt' => 1659312000000, 'date__lt' => 1659484800000]],
+    'timestampMs include start' => [['date__gte' => 1659463200000, 'date__lt' => 1659484800000]],
+    'timestampMs include end' => [['date__gt' => 1659312000000, 'date__lte' => 1659423600000]],
 ]);
 
-test('date range relation', function (array $filter) {
+test('date range relation', function (array $filter, bool $timestampMs = true) {
+    config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
+
     ChildModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:44:11')]);
     ChildModel::factory()->createOne(['datetime_value' => Date::make('2022-08-03 00:28:36')]);
     $expected = ChildModel::factory()->createOne(['datetime_value' => Date::make('2022-08-02 11:55:08')])->parent_id;
@@ -95,4 +105,10 @@ test('date range relation', function (array $filter) {
     'exclude boundaries' => [['date__gt' => '2022-08-01T00:00:00.000000Z', 'date__lt' => '2022-08-03T00:00:00.000000Z']],
     'include start' => [['date__gte' => '2022-08-02T18:00:00.000000Z', 'date__lt' => '2022-08-03T00:00:00.000000Z']],
     'include end' => [['date__gt' => '2022-08-01T00:00:00.000000Z', 'date__lte' => '2022-08-02T07:00:00.000000Z']],
+    'timestamp exclude boundaries' => [['date__gt' => 1659312000, 'date__lt' => 1659484800], false],
+    'timestamp include start' => [['date__gte' => 1659463200, 'date__lt' => 1659484800], false],
+    'timestamp include end' => [['date__gt' => 1659312000, 'date__lte' => 1659423600], false],
+    'timestampMs exclude boundaries' => [['date__gt' => 1659312000000, 'date__lt' => 1659484800000]],
+    'timestampMs include start' => [['date__gte' => 1659463200000, 'date__lt' => 1659484800000]],
+    'timestampMs include end' => [['date__gt' => 1659312000000, 'date__lte' => 1659423600000]],
 ]);

@@ -10,3 +10,4 @@ node_modules
 *.cache
 phpunit.xml
 .huskyrc
+composer.lock
