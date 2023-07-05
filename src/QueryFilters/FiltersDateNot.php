@@ -3,8 +3,8 @@
 namespace Ensi\QueryBuilderHelpers\QueryFilters;
 
 use Carbon\CarbonImmutable;
+use Ensi\QueryBuilderHelpers\Utils\Date;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Date;
 
 class FiltersDateNot extends FiltersBase
 {
@@ -22,7 +22,7 @@ class FiltersDateNot extends FiltersBase
 
     protected function castValue(mixed $source): CarbonImmutable
     {
-        return Date::make($source)->toImmutable();
+        return Date::makeImmutable($source);
     }
 
     protected function whereNotWithinDate(Builder $query, CarbonImmutable $value, string $column): void

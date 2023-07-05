@@ -3,8 +3,8 @@
 namespace Ensi\QueryBuilderHelpers\QueryFilters;
 
 use Carbon\CarbonImmutable;
+use Ensi\QueryBuilderHelpers\Utils\Date;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Date;
 
 class FiltersDateExact extends FiltersBase
 {
@@ -24,7 +24,7 @@ class FiltersDateExact extends FiltersBase
 
     protected function castValue(mixed $source): CarbonImmutable
     {
-        return Date::make($source)->toImmutable();
+        return Date::makeImmutable($source);
     }
 
     private function range(CarbonImmutable $value): array
