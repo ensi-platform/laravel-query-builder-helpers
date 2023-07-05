@@ -15,7 +15,7 @@ class Date
     public static function make(mixed $value): CarbonInterface
     {
         if (is_int($value)) {
-            if (config('query-builder-helpers.timestamp_ms', false)) {
+            if (config('query-builder-helpers.timestamp_ms', true)) {
                 return IlluminateDate::createFromTimestampMs($value);
             } else {
                 return IlluminateDate::createFromTimestamp($value);
