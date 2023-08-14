@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     public function up(): void
     {
         Schema::create('parents', function (Blueprint $table) {
@@ -17,6 +16,7 @@ return new class extends Migration
             $table->boolean('bool_value')->nullable();
             $table->dateTime('datetime_value')->nullable();
             $table->date('date_value')->nullable();
+            $table->json('array_value')->nullable();
 
             $table->timestamps(6);
         });
@@ -34,6 +34,7 @@ return new class extends Migration
             $table->boolean('bool_value')->nullable();
             $table->dateTime('datetime_value')->nullable();
             $table->date('date_value')->nullable();
+            $table->json('array_value')->nullable();
 
             $table->timestamps(6);
         });
@@ -51,6 +52,7 @@ return new class extends Migration
             $table->boolean('bool_value')->nullable();
             $table->dateTime('datetime_value')->nullable();
             $table->date('date_value')->nullable();
+            $table->json('array_value')->nullable();
 
             $table->timestamps(6);
         });

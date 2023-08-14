@@ -4,14 +4,20 @@ namespace Ensi\QueryBuilderHelpers\Tests;
 
 use Ensi\QueryBuilderHelpers\QueryBuilderHelpersServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\QueryBuilder\QueryBuilderServiceProvider;
 
 class TestCase extends Orchestra
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->artisan('migrate')->run();
 
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Ensi\\QueryBuilderHelpers\\Database\\Factories\\'.class_basename($modelName).'Factory'
@@ -24,18 +30,5 @@ class TestCase extends Orchestra
             QueryBuilderServiceProvider::class,
             QueryBuilderHelpersServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app): void
-    {
-        config()->set('database.default', 'testing');
-        config()->set('database.connections.testing', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
-
-        $migration = include __DIR__.'/database/migrations/create_test_tables.php';
-        $migration->up();
     }
 }
