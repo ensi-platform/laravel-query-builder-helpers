@@ -21,8 +21,9 @@
         "orchestra/testbench": "^7.0",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.1",
+        "phpstan/extension-installer": "^1.3",
         "phpunit/phpunit": "^9.5",
-        "phpstan/extension-installer": "^1.3"
+        "spaze/phpstan-disallowed-calls": "^2.16"
     },
     "autoload": {
         "psr-4": {
@@ -35,7 +36,7 @@
         }
     },
     "scripts": {
-        "analyse": "vendor/bin/phpstan analyse src --level=5",
+        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon.dist",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint"
