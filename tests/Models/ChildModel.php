@@ -27,9 +27,6 @@ class ChildModel extends BaseModel
         return $this->hasMany(GrandChildModel::class, 'parent_id');
     }
 
-    /**
-     * @return ChildModelFactory|BaseFactory<self>
-     */
     public static function factory(): ChildModelFactory
     {
         return ChildModelFactory::new();

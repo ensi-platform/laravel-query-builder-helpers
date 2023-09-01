@@ -19,9 +19,6 @@ class GrandChildModel extends BaseModel
         return $this->belongsTo(ChildModel::class, 'parent_id');
     }
 
-    /**
-     * @return GrandChildModelFactory|BaseFactory<self>
-     */
     public static function factory(): GrandChildModelFactory
     {
         return GrandChildModelFactory::new();

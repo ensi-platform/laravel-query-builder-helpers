@@ -1,7 +1,10 @@
 <?php
 
 use Ensi\QueryBuilderHelpers\Filters\ExtraFilter;
+use Ensi\QueryBuilderHelpers\Tests\Models\ChildModel;
 use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
+use Illuminate\Support\Facades\DB;
+
 use function Pest\Laravel\postJson;
 
 test('filter datetime single value success', function ($value, bool $timestampMs = true) {
@@ -99,3 +102,60 @@ test('filter date value success', function ($value, bool $timestampMs = true) {
     'timestamp' => [1647561600, false],
     'timestampMs' => [1647561600000],
 ]);
+
+test('array like', function (array $value, mixed $filter) {
+    ParentModel::factory()->count(2)->create();
+    $expected = ParentModel::factory()->createOne(['array_value' => $value]);
+
+    attachQueryBuilder('test', ParentModel::class, [
+        ExtraFilter::arrayExact('array_value'),
+    ]);
+
+    postJson('/test', ['filter' => ['array_value' => $filter]])
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $expected->id);
+})->with([
+    [['foo', 'bar'], ['foo', 'bar']],
+    [['foo', 'bar'], ['bar', 'foo']],
+    [['foo'], ['foo']],
+    [['foo'], 'foo'],
+])->skip(fn () => DB::getDriverName() === 'sqlite', 'db driver does not support this test');
+
+test("array like don't find", function (array $value, mixed $filter) {
+    ParentModel::factory()->count(2)->create();
+    $expected = ParentModel::factory()->createOne(['array_value' => $value]);
+
+    attachQueryBuilder('test', ParentModel::class, [
+        ExtraFilter::arrayExact('array_value'),
+    ]);
+
+    postJson('/test', ['filter' => ['array_value' => $filter]])
+        ->assertOk()
+        ->assertJsonCount(0, 'data');
+})->with([
+    [['foo', 'bar'], 'foo'],
+    [['foo', 'bar'], ['foo']],
+    [['foo', 'bar'], ['bar']],
+    [['foo'], ['foo', 'bar']],
+    [['foo'], ['bar', 'foo']],
+])->skip(fn () => DB::getDriverName() === 'sqlite', 'db driver does not support this test');
+
+test('array like relation', function (array $value, mixed $filter) {
+    ChildModel::factory()->count(2)->create();
+    $expected = ChildModel::factory()->createOne(['array_value' => $value]);
+
+    attachQueryBuilder('test', ParentModel::class, [
+        ExtraFilter::arrayContain('child__array_value', 'children.array_value'),
+    ]);
+
+    postJson('/test', ['filter' => ['child__array_value' => $filter]])
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $expected->id);
+})->with([
+    [['foo', 'bar'], ['foo', 'bar']],
+    [['foo', 'bar'], ['bar', 'foo']],
+    [['foo'], ['foo']],
+    [['foo'], 'foo'],
+])->skip(fn () => DB::getDriverName() === 'sqlite', 'db driver does not support this test');

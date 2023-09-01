@@ -89,3 +89,12 @@ $this->allowedFilters([
 ```bash
 composer test
 ```
+
+По умолчанию тестирование проходит с использованием in-memory DataBase SQLite. 
+SQLite не поддерживает часть функций, например: json_contains. 
+Для тестирования этих функций укажите в **phpunit.xml.dist** в секции *php* конфигурацию с подключением к другой базе данных.
+При написании таких тестов используете функцию *skip* для пропуска тестов с использованием подключения по умолчанию.
+
+```php
+->skip(fn () => DB::getDriverName() === 'sqlite', 'db driver does not support this test');
+```

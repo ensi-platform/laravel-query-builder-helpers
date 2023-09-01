@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CarbonInterface|null $datetime_value
  * @property CarbonInterface|null $date_value
  * @property bool|null $bool_value
+ * @property array|null $array_value
  */
 abstract class BaseModel extends Model
 {
@@ -22,5 +23,6 @@ abstract class BaseModel extends Model
         'int_value' => 'int',
         'float_value' => 'float',
         'bool_value' => 'bool',
+        'array_value' => 'array',
     ];
 }

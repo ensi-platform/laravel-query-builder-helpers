@@ -8,6 +8,8 @@ use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateNot;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateRange;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersEmpty;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersHas;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayContain;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayExact;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersLike;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersPredefined;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersRange;
@@ -92,6 +94,16 @@ class ExtraFilter
     public static function dateLessOrEqual(string $name, ?string $internalName = null): AllowedFilter
     {
         return new AllowedFilter($name, new FiltersDateRange(RangeOperator::LESS_OR_EQUAL), $internalName);
+    }
+
+    public static function arrayExact(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersArrayExact(), $internalName);
+    }
+
+    public static function arrayContain(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersArrayContain(), $internalName);
     }
 
     /**

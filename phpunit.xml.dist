@@ -36,4 +36,16 @@
     <logging>
         <junit outputFile="build/report.junit.xml"/>
     </logging>
+    <php>
+        <!--DEFAULT -->
+        <env name="DB_CONNECTION" value="sqllite" />
+        <env name="DB_DATABASE" value=":memory:" />
+        <!--for testing with json on real db -->
+<!--        <env name="DB_CONNECTION" value="pgsql" />-->
+<!--        <env name="DB_HOST" value="database.ensi.127.0.0.1.nip.io" />-->
+<!--        <env name="DB_PORT" value="5432" />-->
+<!--        <env name="DB_DATABASE" value="laravel_query_builder_helpers" />-->
+<!--        <env name="DB_USERNAME" value="postgres" />-->
+<!--        <env name="DB_PASSWORD" value="example" />-->
+    </php>
 </phpunit>
