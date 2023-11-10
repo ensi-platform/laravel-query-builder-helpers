@@ -27,6 +27,7 @@ StringFilter::make('name')->contain()->endWith()->empty();
 - StringFilter
 - NumericFilter
 - DateFilter
+- PlugFilter (заглушка, для передачи дополнительных параметров в другой фильтр)
 - ExtraFilter (описан в разделе "Дополнительные фильтры")
 
 Каждый тип фильтра имеет свой суффикс, который добавляется к названию, переданному в метод **make**.
