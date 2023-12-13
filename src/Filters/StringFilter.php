@@ -16,6 +16,11 @@ class StringFilter extends Filter
         return $this->addFilter(ExtraFilter::empty(...$this->makeFilterParams(self::EMPTY)));
     }
 
+    public function not(): static
+    {
+        return $this->addFilter(ExtraFilter::not(...$this->makeFilterParams(self::NOT)));
+    }
+
     public function contain(): static
     {
         return $this->addFilter(ExtraFilter::contain(...$this->makeFilterParams(self::CONTAIN)));

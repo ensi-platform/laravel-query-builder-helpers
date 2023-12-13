@@ -38,7 +38,7 @@
     </logging>
     <php>
         <!--DEFAULT -->
-        <env name="DB_CONNECTION" value="sqllite" />
+        <env name="DB_CONNECTION" value="sqlite" />
         <env name="DB_DATABASE" value=":memory:" />
         <!--for testing with json on real db -->
 <!--        <env name="DB_CONNECTION" value="pgsql" />-->

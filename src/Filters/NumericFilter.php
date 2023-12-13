@@ -16,6 +16,11 @@ class NumericFilter extends Filter
         return $this->addFilter(ExtraFilter::empty(...$this->makeFilterParams(self::EMPTY)));
     }
 
+    public function not(): static
+    {
+        return $this->addFilter(ExtraFilter::not(...$this->makeFilterParams(self::NOT)));
+    }
+
     public function gt(): static
     {
         return $this->addFilter(ExtraFilter::greater(...$this->makeFilterParams(self::GREATER)));
