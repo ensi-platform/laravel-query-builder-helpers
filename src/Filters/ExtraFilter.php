@@ -11,6 +11,7 @@ use Ensi\QueryBuilderHelpers\QueryFilters\FiltersHas;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayContain;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayExact;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersLike;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersNot;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersPredefined;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersRange;
 use Ensi\QueryBuilderHelpers\QueryFilters\NestedFilter;
@@ -59,6 +60,11 @@ class ExtraFilter
     public static function empty(string $name, ?string $internalName = null): AllowedFilter
     {
         return new AllowedFilter($name, new FiltersEmpty(), $internalName);
+    }
+
+    public static function not(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersNot(), $internalName);
     }
 
     public static function has(string $name, ?string $internalName = null): AllowedFilter
