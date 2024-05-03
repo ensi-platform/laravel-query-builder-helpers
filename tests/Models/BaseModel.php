@@ -24,5 +24,7 @@ abstract class BaseModel extends Model
         'float_value' => 'float',
         'bool_value' => 'bool',
         'array_value' => 'array',
+        'datetime_value' => 'datetime',
+        'date_value' => 'date',
     ];
 }

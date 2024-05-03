@@ -4,7 +4,6 @@ use Ensi\QueryBuilderHelpers\Filters\ExtraFilter;
 use Ensi\QueryBuilderHelpers\Tests\Models\ChildModel;
 use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
 use Illuminate\Support\Facades\DB;
-
 use function Pest\Laravel\postJson;
 
 test('filter datetime single value success', function ($value, bool $timestampMs = true) {
