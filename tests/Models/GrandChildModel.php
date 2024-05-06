@@ -2,7 +2,6 @@
 
 namespace Ensi\QueryBuilderHelpers\Tests\Models;
 
-use Ensi\QueryBuilderHelpers\Tests\Models\Factories\BaseFactory;
 use Ensi\QueryBuilderHelpers\Tests\Models\Factories\GrandChildModelFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

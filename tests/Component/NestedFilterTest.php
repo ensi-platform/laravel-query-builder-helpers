@@ -6,7 +6,9 @@ use Ensi\QueryBuilderHelpers\Tests\Models\GrandChildModel;
 use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as RawBuilder;
+
 use function Pest\Laravel\postJson;
+
 use Spatie\QueryBuilder\AllowedFilter;
 
 test('relation by name', function () {
