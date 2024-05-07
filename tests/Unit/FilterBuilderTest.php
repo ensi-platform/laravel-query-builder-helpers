@@ -2,8 +2,8 @@
 
 use Ensi\QueryBuilderHelpers\Filters\DateFilter;
 use Ensi\QueryBuilderHelpers\Filters\Filter;
-use Ensi\QueryBuilderHelpers\Filters\StringFilter;
 use Ensi\QueryBuilderHelpers\Filters\NumericFilter;
+use Ensi\QueryBuilderHelpers\Filters\StringFilter;
 use Spatie\QueryBuilder\AllowedFilter;
 
 test('it builds filters array', function (Filter $filters, array $appliedFilterNames) {

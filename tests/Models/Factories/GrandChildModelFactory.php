@@ -4,7 +4,6 @@ namespace Ensi\QueryBuilderHelpers\Tests\Models\Factories;
 
 use Ensi\QueryBuilderHelpers\Tests\Models\ChildModel;
 use Ensi\QueryBuilderHelpers\Tests\Models\GrandChildModel;
-use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
 
 /**
  * @extends BaseFactory<GrandChildModel>

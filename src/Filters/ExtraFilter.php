@@ -3,21 +3,21 @@
 namespace Ensi\QueryBuilderHelpers\Filters;
 
 use Closure;
+use Ensi\QueryBuilderHelpers\Enums\LikeMode;
+use Ensi\QueryBuilderHelpers\Enums\RangeOperator;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayContain;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayExact;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateExact;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateNot;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateRange;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersEmpty;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersHas;
-use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayContain;
-use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayExact;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersLike;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersNot;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersPredefined;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersRange;
 use Ensi\QueryBuilderHelpers\QueryFilters\NestedFilter;
 use Ensi\QueryBuilderHelpers\QueryFilters\NestedScope;
-use Ensi\QueryBuilderHelpers\Enums\LikeMode;
-use Ensi\QueryBuilderHelpers\Enums\RangeOperator;
 use Spatie\QueryBuilder\AllowedFilter;
 
 class ExtraFilter

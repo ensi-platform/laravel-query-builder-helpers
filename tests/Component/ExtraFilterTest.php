@@ -2,6 +2,7 @@
 
 use Ensi\QueryBuilderHelpers\Filters\ExtraFilter;
 use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
+
 use function Pest\Laravel\postJson;
 
 test('one value as array', function (array $filter) {

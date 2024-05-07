@@ -4,6 +4,7 @@ use Ensi\QueryBuilderHelpers\Filters\ExtraFilter;
 use Ensi\QueryBuilderHelpers\Tests\Models\ChildModel;
 use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
 use Illuminate\Support\Facades\DB;
+
 use function Pest\Laravel\postJson;
 
 test('like', function (array $filter) {

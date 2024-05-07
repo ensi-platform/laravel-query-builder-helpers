@@ -4,6 +4,7 @@ use Ensi\QueryBuilderHelpers\Filters\ExtraFilter;
 use Ensi\QueryBuilderHelpers\Tests\Models\GrandChildModel;
 use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+
 use function Pest\Laravel\postJson;
 
 test('enable predefined in request', function () {

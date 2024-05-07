@@ -3,6 +3,7 @@
 use Ensi\QueryBuilderHelpers\Filters\ExtraFilter;
 use Ensi\QueryBuilderHelpers\Tests\Models\GrandChildModel;
 use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
+
 use function Pest\Laravel\postJson;
 
 test('has', function (array $filter) {
