@@ -12,6 +12,14 @@ class TestCase extends Orchestra
 {
     use RefreshDatabase;
 
+    protected function getPackageProviders($app): array
+    {
+        return [
+            QueryBuilderServiceProvider::class,
+            QueryBuilderHelpersServiceProvider::class,
+        ];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -20,15 +28,7 @@ class TestCase extends Orchestra
         $this->artisan('migrate')->run();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Ensi\\QueryBuilderHelpers\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Ensi\\QueryBuilderHelpers\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
-    }
-
-    protected function getPackageProviders($app): array
-    {
-        return [
-            QueryBuilderServiceProvider::class,
-            QueryBuilderHelpersServiceProvider::class,
-        ];
     }
 }

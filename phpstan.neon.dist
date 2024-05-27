@@ -1,10 +1,10 @@
 includes:
     - ./vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - ./phpstan-package.neon
 
 parameters:
     paths:
         - src
-        - tests
 
     scanFiles:
 
@@ -32,10 +32,20 @@ parameters:
             message: '#Call to an undefined method Pest\\Expectation|Pest\\Support\\Extendable::#'
             path: '*Test.php'
 
+        # Pest allow pass any array for TestCall::with
+        -
+            message: '#Parameter \#\d ...\$data of method Pest\\PendingCalls\\TestCall::with(.*) array(.*)given#'
+            path: '*Test.php'
+
          # Ignore custom method for Faker\Generator
         -
             message: '#Call to an undefined method Faker\\Generator|Ensi\\TestFactories\\FakerProvider::#'
             path: '*Factory.php'
+
+         # Ignore transfer of UploadedFile in auto-generated lib
+        -
+            message: '#expects SplFileObject\|null, Illuminate\\Http\\UploadedFile given.#'
+            path: '*Action.php'
 
     excludePaths:
         - ./*/*/FileToBeExcluded.php
@@ -48,5 +58,4 @@ parameters:
             function: 'dump()'
             message: 'use some logger instead'
 
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
