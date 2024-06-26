@@ -20,6 +20,8 @@ return (new PhpCsFixer\Config())
         'trailing_comma_in_multiline' => true,
         'phpdoc_scalar' => true,
         'unary_operator_spaces' => true,
+        'binary_operator_spaces' => true,
+        'concat_space' => ['spacing' => 'one'],
         'blank_line_before_statement' => [
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
@@ -37,6 +39,6 @@ return (new PhpCsFixer\Config())
         'single_trait_insert_per_statement' => true,
         'no_whitespace_in_blank_line' => true,
         'method_chaining_indentation' => true,
-
+        'single_space_around_construct' => true,
     ])
     ->setFinder($finder);

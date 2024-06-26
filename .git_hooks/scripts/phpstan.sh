@@ -1,12 +1,13 @@
 #!/bin/bash
 
+# Run composer phpstan
+
 ESC_SEQ="\x1b["
 COL_RESET=$ESC_SEQ"39;49;00m"
 COL_RED=$ESC_SEQ"0;31m"
 COL_GREEN=$ESC_SEQ"0;32m"
 COL_YELLOW=$ESC_SEQ"0;33m"
-echo "Okay"
-exit 0
+
 echo
 printf "$COL_YELLOW%s$COL_RESET\n" "Running pre-push hook: \"phpstan\""
 

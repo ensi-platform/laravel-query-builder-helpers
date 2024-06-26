@@ -1,20 +1,32 @@
 # laravel-query-builder-helpers
 
-Пакет laravel-query-builder-helpers представляет из себя набор классов, упрощающих создание доступных фильтров для пакета laravel-query-builder от Spatie.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ensi/laravel-query-builder-helpers.svg?style=flat-square)](https://packagist.org/packages/ensi/laravel-query-builder-helpers)
+[![Tests](https://github.com/ensi-platform/laravel-php-rdkafka/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/ensi-platform/laravel-php-rdkafka/actions/workflows/run-tests.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/ensi/laravel-query-builder-helpers.svg?style=flat-square)](https://packagist.org/packages/ensi/laravel-query-builder-helpers)
 
-## Установка
+The laravel-query-builder-helper package is a set of classes that simplify the creation of available filters for the laravel-query-builder package from Spatie.
 
-Пакет доступен к установке через composer:
+## Installation
+
+You can install the package via composer:
 
 ```bash
 composer require ensi/laravel-query-builder-helpers
 ```
 
-## Использование
+## Version Compatibility
 
-### Создание фильтра
+| Laravel query builder helpers | Laravel                    | PHP            |
+|-------------------------------|----------------------------|----------------|
+| ^0.1.0                        | ^9.x                       | ^8.1           |
+| ^0.1.4                        | ^9.x \|\| ^10.x            | ^8.1           |
+| ^0.1.7                        | ^9.x \|\| ^10.x \|\| ^11.x | ^8.1           |
 
-Создание фильтров осуществляется путем применения статического метода **make** и дальнейшего вызова цепочки методов-фильтров.
+## Basic Usage
+
+### Creating a filter
+
+Filters are created by applying the static **make** method and then calling the chain of filter methods.
 
 ```php
 use Ensi\QueryBuilderHelpers\Filters\StringFilter;
@@ -22,30 +34,30 @@ use Ensi\QueryBuilderHelpers\Filters\StringFilter;
 StringFilter::make('name')->contain()->endWith()->empty();
 ```
 
-В данный момент доступны следующие классы-фильтры:
+The following filter classes are currently available:
 
 - StringFilter
 - NumericFilter
 - DateFilter
-- PlugFilter (заглушка, для передачи дополнительных параметров в другой фильтр)
-- ExtraFilter (описан в разделе "Дополнительные фильтры")
+- PlugFilter (a stub for passing additional parameters to another filter)
+- ExtraFilter (described in the section "Additional filters")
 
-Каждый тип фильтра имеет свой суффикс, который добавляется к названию, переданному в метод **make**.
-Например, по умолчанию фильтр **empty** имеет суффикс **_empty**, а фильтр **gt** - **_gt**:
+Each filter type has its own suffix, which is added to the name passed to the **make** method.
+For example, by default, the filter **empty** has the suffix **_empty**, and the filter **gt** is **_gt**:
 
 ```php
 NumericFilter::make('rank')->exact()->empty()->gt()->lt();
 ```
-В результате мы получим четыре варианта фильтрации, доступных при поисковых запросах.
+As a result, we will get four filtering options available for search queries.
 
 - rank
 - rank_empty
 - rank_gt
 - rank_lt
 
-### Передача фильтров в метод allowedFilters
+### Passing filters to the allowed Filters method
 
-Для передачи полученных фильтров в метод allowedFilters пакета от Spatie потребуется деструктуризация массива.
+To transfer the received filters to the `allowedFilters` method of the Spatie package, the array will need to be destructured.
 
 ```php
 $this->allowedFilters([
@@ -53,15 +65,15 @@ $this->allowedFilters([
 ]);
 ```
 
-### Дополнительные фильтры
+### Additional filters
 
-Класс **ExtraFilter** используется вышеупомянутыми классами, но также может быть задействован отдельно.
+The **ExtraFilter** class is used by the aforementioned classes, but can also be used separately.
 
-Из полезных методов можно выделить:
+Useful methods include:
 
-- nested (регистрирует набор вложенных фильтров)
-- predefined (создает предопределенный фильтр, заключающий в себе сложную фильтрацию)
-- и другие
+- nested (registers a set of nested filters)
+- predefined (creates a predefined filter that includes complex filtering)
+- and others
 
 ```php
 ...ExtraFilter::nested('page', [
@@ -69,10 +81,10 @@ $this->allowedFilters([
 ]),
 ```
 
-## Конфигурация
+## Configuration
 
-В файле **config.php** можно настроить применяемые суффиксы.
-Там же можно настроить like-оператор, используемый в поисковых запросах.
+In the file **config.php ** you can customize the applied suffixes.
+You can also set up the like operator used in search queries there.
 
 ```php
 'suffixes' => [
@@ -85,17 +97,28 @@ $this->allowedFilters([
 'like_operator' => 'LIKE',
 ```
 
-### Тестирование
+## Contributing
 
-```bash
-composer test
-```
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
-По умолчанию тестирование проходит с использованием in-memory DataBase SQLite. 
-SQLite не поддерживает часть функций, например: json_contains. 
-Для тестирования этих функций укажите в **phpunit.xml.dist** в секции *php* конфигурацию с подключением к другой базе данных.
-При написании таких тестов используете функцию *skip* для пропуска тестов с использованием подключения по умолчанию.
+### Testing
+
+1. composer install
+2. composer test
+
+By default, testing takes place using in-memory DataBase SQLite.
+SQLite does not support some functions, for example: json_contains.
+To test these functions, copy `phpunit.xml.dist` to `phpunit.xml` and specify the configuration with connection to another database in the *php* section.
+When writing such tests, use the *skip* function to skip tests using the default connection.
 
 ```php
 ->skip(fn () => DB::getDriverName() === 'sqlite', 'db driver does not support this test');
 ```
+
+## Security Vulnerabilities
+
+Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
