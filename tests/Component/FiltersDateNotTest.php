@@ -5,7 +5,7 @@ use Ensi\QueryBuilderHelpers\Tests\Models\ParentModel;
 
 use function Pest\Laravel\postJson;
 
-test('filter exclude date success', function (string|int|array $value, int $count, bool $timestampMs = true) {
+test('filter exclude (datetime as date) success', function (string|int|array $value, int $count, bool $timestampMs = true) {
     config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
 
     ParentModel::factory()->createMany([

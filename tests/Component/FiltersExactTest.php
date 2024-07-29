@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use function Pest\Laravel\postJson;
 
-test('filter datetime single value success', function ($value, bool $timestampMs = true) {
+test('filter (datetime as date) single value success', function ($value, bool $timestampMs = true) {
     config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
 
     $expected = ParentModel::factory()->createOne(['datetime_value' => '2022-03-19 12:45:14']);
@@ -34,7 +34,29 @@ test('filter datetime single value success', function ($value, bool $timestampMs
     'timestampMs' => [1647704715000],
 ]);
 
-test('filter datetime multi value one result success', function ($value, bool $timestampMs = true) {
+test('filter (datetime as datetime) single value success', function ($value, bool $timestampMs = true) {
+    config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
+
+    $expected = ParentModel::factory()->createOne(['datetime_value' => '2022-03-17 15:00:02']);
+    ParentModel::factory()->createMany([
+        ['datetime_value' => '2022-03-17 15:00:01'],
+        ['datetime_value' => '2022-03-17 15:00:03'],
+        ['datetime_value' => null],
+    ]);
+
+    attachQueryBuilder('test', ParentModel::class, [ExtraFilter::dateTimeExact('datetime_value')]);
+
+    postJson('/test', ['filter' => ['datetime_value' => $value]])
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $expected->id);
+})->with([
+    'datetime' => ['2022-03-17 15:00:02'],
+    'timestamp' => [1647529202, false],
+    'timestampMs' => [1647529202000],
+]);
+
+test('filter (datetime as date) multi value one result success', function ($value, bool $timestampMs = true) {
     config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
 
     $expected = ParentModel::factory()->createOne(['datetime_value' => '2022-03-18 12:45:14']);
@@ -56,7 +78,29 @@ test('filter datetime multi value one result success', function ($value, bool $t
     'timestampMs' => [[1647561600000, 1647388800000, 1647734400000]],
 ]);
 
-test('filter datetime multi value multi result success', function ($value, bool $timestampMs = true) {
+test('filter (datetime as datetime) multi value one result success', function ($value, bool $timestampMs = true) {
+    config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
+
+    $expected = ParentModel::factory()->createOne(['datetime_value' => '2022-03-17 15:00:02']);
+    ParentModel::factory()->createMany([
+        ['datetime_value' => '2022-03-17 15:00:01'],
+        ['datetime_value' => '2022-03-17 15:00:03'],
+        ['datetime_value' => null],
+    ]);
+
+    attachQueryBuilder('test', ParentModel::class, [ExtraFilter::dateTimeExact('datetime_value')]);
+
+    postJson('/test', ['filter' => ['datetime_value' => $value]])
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $expected->id);
+})->with([
+    'date' => [['2022-03-17 15:00:02', '2022-03-17 15:00:04']],
+    'timestamp' => [[1647529202, 1647529204], false],
+    'timestampMs' => [[1647529202000, 1647529204000]],
+]);
+
+test('filter (datetime as date) multi value multi result success', function ($value, bool $timestampMs = true) {
     config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
 
     ParentModel::factory()->createMany([
@@ -77,6 +121,31 @@ test('filter datetime multi value multi result success', function ($value, bool 
     'date' => [['2022-03-17', '2022-03-18', '2022-03-20']],
     'timestamp' => [[1647475200, 1647561600, 1647734400], false],
     'timestampMs' => [[1647475200000, 1647561600000, 1647734400000]],
+]);
+
+test('filter (datetime as datetime) multi value multi result success', function ($value, bool $timestampMs = true) {
+    config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
+
+    ParentModel::factory()->createMany([
+        ['datetime_value' => '2022-03-17 15:00:01'],
+        ['datetime_value' => '2022-03-17 15:00:02'],
+        ['datetime_value' => '2022-03-17 15:00:03'],
+        ['datetime_value' => '2022-03-17 15:00:04'],
+    ]);
+
+    attachQueryBuilder('test', ParentModel::class, [ExtraFilter::dateTimeExact('datetime_value')]);
+
+    postJson('/test', ['filter' => ['datetime_value' => $value]])
+        ->assertOk()
+        ->assertJsonCount(2, 'data')
+        ->assertJsonFragment(['datetime_value' => '2022-03-17T15:00:01.000000Z'])
+        ->assertJsonFragment(['datetime_value' => '2022-03-17T15:00:04.000000Z'])
+        ->assertJsonMissing(['datetime_value' => '2022-03-17T15:00:02.000000Z'])
+        ->assertJsonMissing(['datetime_value' => '2022-03-17T15:00:03.000000Z']);
+})->with([
+    'date' => [['2022-03-17 15:00:01', '2022-03-17 15:00:04']],
+    'timestamp' => [[1647529201, 1647529204], false],
+    'timestampMs' => [[1647529201000, 1647529204000]],
 ]);
 
 test('filter date value success', function ($value, bool $timestampMs = true) {

@@ -10,6 +10,9 @@ use Ensi\QueryBuilderHelpers\QueryFilters\FiltersArrayExact;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateExact;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateNot;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateRange;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateTimeExact;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateTimeNot;
+use Ensi\QueryBuilderHelpers\QueryFilters\FiltersDateTimeRange;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersEmpty;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersHas;
 use Ensi\QueryBuilderHelpers\QueryFilters\FiltersLike;
@@ -100,6 +103,36 @@ class ExtraFilter
     public static function dateLessOrEqual(string $name, ?string $internalName = null): AllowedFilter
     {
         return new AllowedFilter($name, new FiltersDateRange(RangeOperator::LESS_OR_EQUAL), $internalName);
+    }
+
+    public static function dateTimeExact(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersDateTimeExact(), $internalName);
+    }
+
+    public static function dateTimeNot(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersDateTimeNot(), $internalName);
+    }
+
+    public static function dateTimeGreater(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersDateTimeRange(RangeOperator::GREATER), $internalName);
+    }
+
+    public static function dateTimeGreaterOrEqual(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersDateTimeRange(RangeOperator::GREATER_OR_EQUAL), $internalName);
+    }
+
+    public static function dateTimeLess(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersDateTimeRange(RangeOperator::LESS), $internalName);
+    }
+
+    public static function dateTimeLessOrEqual(string $name, ?string $internalName = null): AllowedFilter
+    {
+        return new AllowedFilter($name, new FiltersDateTimeRange(RangeOperator::LESS_OR_EQUAL), $internalName);
     }
 
     public static function arrayExact(string $name, ?string $internalName = null): AllowedFilter

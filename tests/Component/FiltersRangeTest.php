@@ -54,7 +54,7 @@ test('range relation', function (array $filter) {
     'multiple filters' => [['float__lte' => 125.5, 'int__gt' => 12]],
 ]);
 
-test('date range', function (array $filter, bool $timestampMs = true) {
+test('(datetime as date) range', function (array $filter, bool $timestampMs = true) {
     config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
 
     ParentModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:44:11')]);
@@ -84,7 +84,37 @@ test('date range', function (array $filter, bool $timestampMs = true) {
     'timestampMs include end' => [['date__gt' => 1659312000000, 'date__lte' => 1659423600000]],
 ]);
 
-test('date range relation', function (array $filter, bool $timestampMs = true) {
+test('(datetime as datetime) range', function (array $filter, bool $timestampMs = true) {
+    config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
+
+    ParentModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:00:01')]);
+    $expected = ParentModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:00:02')]);
+    ParentModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:00:03')]);
+
+    attachQueryBuilder('test', ParentModel::class, [
+        ExtraFilter::dateTimeGreater('date__gt', 'datetime_value'),
+        ExtraFilter::dateTimeGreaterOrEqual('date__gte', 'datetime_value'),
+        ExtraFilter::dateTimeLess('date__lt', 'datetime_value'),
+        ExtraFilter::dateTimeLessOrEqual('date__lte', 'datetime_value'),
+    ]);
+
+    postJson('/test', ['filter' => $filter])
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $expected->id);
+})->with([
+    'exclude boundaries' => [['date__gt' => '2022-08-01T15:00:01.000000Z', 'date__lt' => '2022-08-01T15:00:03.000000Z']],
+    'include start' => [['date__gte' => '2022-08-01T15:00:02.000000Z', 'date__lt' => '2022-08-01T15:00:03.000000Z']],
+    'include end' => [['date__gt' => '2022-08-01T15:00:01.000000Z', 'date__lte' => '2022-08-01T15:00:02.000000Z']],
+    'timestamp exclude boundaries' => [['date__gt' => 1659366001, 'date__lt' => 1659366003], false],
+    'timestamp include start' => [['date__gte' => 1659366002, 'date__lt' => 1659366003], false],
+    'timestamp include end' => [['date__gt' => 1659366001, 'date__lte' => 1659366002], false],
+    'timestampMs exclude boundaries' => [['date__gt' => 1659366001000, 'date__lt' => 1659366003000]],
+    'timestampMs include start' => [['date__gte' => 1659366002000, 'date__lt' => 1659366003000]],
+    'timestampMs include end' => [['date__gt' => 1659366001000, 'date__lte' => 1659366002000]],
+]);
+
+test('(datetime as date) range relation', function (array $filter, bool $timestampMs = true) {
     config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
 
     ChildModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:44:11')]);
@@ -112,4 +142,34 @@ test('date range relation', function (array $filter, bool $timestampMs = true) {
     'timestampMs exclude boundaries' => [['date__gt' => 1659312000000, 'date__lt' => 1659484800000]],
     'timestampMs include start' => [['date__gte' => 1659463200000, 'date__lt' => 1659484800000]],
     'timestampMs include end' => [['date__gt' => 1659312000000, 'date__lte' => 1659423600000]],
+]);
+
+test('(datetime as datetime) range relation', function (array $filter, bool $timestampMs = true) {
+    config()->set('query-builder-helpers.timestamp_ms', $timestampMs);
+
+    ChildModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:00:01')]);
+    $expected = ChildModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:00:02')])->parent_id;
+    ChildModel::factory()->createOne(['datetime_value' => Date::make('2022-08-01 15:00:03')]);
+
+    attachQueryBuilder('test', ParentModel::class, [
+        ExtraFilter::dateTimeGreater('date__gt', 'children.datetime_value'),
+        ExtraFilter::dateTimeGreaterOrEqual('date__gte', 'children.datetime_value'),
+        ExtraFilter::dateTimeLess('date__lt', 'children.datetime_value'),
+        ExtraFilter::dateTimeLessOrEqual('date__lte', 'children.datetime_value'),
+    ]);
+
+    postJson('/test', ['filter' => $filter])
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $expected);
+})->with([
+    'exclude boundaries' => [['date__gt' => '2022-08-01T15:00:01.000000Z', 'date__lt' => '2022-08-01T15:00:03.000000Z']],
+    'include start' => [['date__gte' => '2022-08-01T15:00:02.000000Z', 'date__lt' => '2022-08-01T15:00:03.000000Z']],
+    'include end' => [['date__gt' => '2022-08-01T15:00:01.000000Z', 'date__lte' => '2022-08-01T15:00:02.000000Z']],
+    'timestamp exclude boundaries' => [['date__gt' => 1659366001, 'date__lt' => 1659366003], false],
+    'timestamp include start' => [['date__gte' => 1659366002, 'date__lt' => 1659366003], false],
+    'timestamp include end' => [['date__gt' => 1659366001, 'date__lte' => 1659366002], false],
+    'timestampMs exclude boundaries' => [['date__gt' => 1659366001000, 'date__lt' => 1659366003000]],
+    'timestampMs include start' => [['date__gte' => 1659366002000, 'date__lt' => 1659366003000]],
+    'timestampMs include end' => [['date__gt' => 1659366001000, 'date__lte' => 1659366002000]],
 ]);
