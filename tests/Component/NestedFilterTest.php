@@ -17,7 +17,7 @@ test('relation by name', function () {
 
     attachQueryBuilder('test', ParentModel::class, [
         ...ExtraFilter::nested('children', [
-            AllowedFilter::exact('int_value'),
+            AllowedFilter::exact('int_value')->default(null),
             ExtraFilter::lessOrEqual('float_value__lte', 'float_value')->default(null),
         ]),
     ]);
@@ -38,7 +38,7 @@ test('relation with callback', function () {
         ...ExtraFilter::nested(
             fn (Builder $query, Closure $callback) => $query->whereHas('children', fn (Builder $q) => $callback($q)),
             [
-                AllowedFilter::exact('int_value'),
+                AllowedFilter::exact('int_value')->default(null),
                 ExtraFilter::lessOrEqual('float_value__lte', 'float_value')->default(null),
             ]
         ),
@@ -70,7 +70,7 @@ test('relation with additional condition', function () {
 
     attachQueryBuilder('test', ParentModel::class, [
         ...ExtraFilter::nested($children, [
-            AllowedFilter::exact('int_value'),
+            AllowedFilter::exact('int_value')->default(null),
             ExtraFilter::lessOrEqual('float_value__lte', 'float_value')->default(null),
         ]),
     ]);
@@ -89,7 +89,7 @@ test('deep relation', function () {
 
     attachQueryBuilder('test', ParentModel::class, [
         ...ExtraFilter::nested('children.children', [
-            AllowedFilter::exact('string_value'),
+            AllowedFilter::exact('string_value')->default(null),
             ExtraFilter::lessOrEqual('int_value__lt', 'int_value')->default(null),
         ]),
     ]);
