@@ -17,8 +17,8 @@ test('relation by name', function () {
 
     attachQueryBuilder('test', ParentModel::class, [
         ...ExtraFilter::nested('children', [
-            AllowedFilter::exact('int_value')->default(null),
-            ExtraFilter::lessOrEqual('float_value__lte', 'float_value')->default(null),
+            AllowedFilter::exact('int_value'),
+            ExtraFilter::lessOrEqual('float_value__lte', 'float_value'),
         ]),
     ]);
 
@@ -38,8 +38,8 @@ test('relation with callback', function () {
         ...ExtraFilter::nested(
             fn (Builder $query, Closure $callback) => $query->whereHas('children', fn (Builder $q) => $callback($q)),
             [
-                AllowedFilter::exact('int_value')->default(null),
-                ExtraFilter::lessOrEqual('float_value__lte', 'float_value')->default(null),
+                AllowedFilter::exact('int_value'),
+                ExtraFilter::lessOrEqual('float_value__lte', 'float_value'),
             ]
         ),
     ]);
@@ -70,8 +70,8 @@ test('relation with additional condition', function () {
 
     attachQueryBuilder('test', ParentModel::class, [
         ...ExtraFilter::nested($children, [
-            AllowedFilter::exact('int_value')->default(null),
-            ExtraFilter::lessOrEqual('float_value__lte', 'float_value')->default(null),
+            AllowedFilter::exact('int_value'),
+            ExtraFilter::lessOrEqual('float_value__lte', 'float_value'),
         ]),
     ]);
 
@@ -89,8 +89,8 @@ test('deep relation', function () {
 
     attachQueryBuilder('test', ParentModel::class, [
         ...ExtraFilter::nested('children.children', [
-            AllowedFilter::exact('string_value')->default(null),
-            ExtraFilter::lessOrEqual('int_value__lt', 'int_value')->default(null),
+            AllowedFilter::exact('string_value'),
+            ExtraFilter::lessOrEqual('int_value__lt', 'int_value'),
         ]),
     ]);
 
@@ -110,7 +110,7 @@ test('belong to', function () {
 
     attachQueryBuilder('test', ChildModel::class, [
         ...ExtraFilter::nested('parent', [
-            ExtraFilter::less('parent_int__lt', 'int_value')->default(null),
+            ExtraFilter::less('parent_int__lt', 'int_value'),
         ]),
     ]);
 
@@ -132,10 +132,10 @@ test('multiple nested', function () {
 
     attachQueryBuilder('test', ChildModel::class, [
         ...ExtraFilter::nested('parent', [
-            ExtraFilter::less('parent_int__lt', 'int_value')->default(null),
+            ExtraFilter::less('parent_int__lt', 'int_value'),
         ]),
         ...ExtraFilter::nested('children', [
-            ExtraFilter::greater('child_date__gt', 'datetime_value')->default(null),
+            ExtraFilter::greater('child_date__gt', 'datetime_value'),
         ]),
     ]);
 
