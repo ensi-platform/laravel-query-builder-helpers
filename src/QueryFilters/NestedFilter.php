@@ -18,7 +18,9 @@ class NestedFilter extends AllowedFilter
         );
 
         $this->ignored = new Collection($source->getIgnored());
-        $this->default($source->getDefault());
+        if ($source->hasDefault()) {
+            $this->default($source->getDefault());
+        }
     }
 
     public function filter(QueryBuilder $query, $value): void
