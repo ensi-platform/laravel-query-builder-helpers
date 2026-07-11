@@ -55,7 +55,14 @@ function attachQueryBuilder(string $path, string $modelClass, array $filters): v
 {
     Route::post($path, function (Request $request) use ($modelClass, $filters) {
         $builder = new QueryBuilder($modelClass::query(), $request);
-        $builder->allowedFilters($filters);
+        $allowedFilters = new ReflectionMethod($builder, 'allowedFilters');
+        $parameter = $allowedFilters->getParameters()[0] ?? null;
+
+        if ($parameter?->isVariadic()) {
+            $builder->allowedFilters(...$filters);
+        } else {
+            $builder->allowedFilters($filters);
+        }
 
         return ['data' => $builder->get()];
     });
